@@ -18,11 +18,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox, QFileDialog, QInputDialog, QWidget, QFormLayout, QPushButton, QLineEdit, QComboBox, QRadioButton, QButtonGroup, QCalendarWidget
 
 root=Tk()
-root.title("Herramienta para la introducción de datos en la DB de las Matrix - For LandBased use only")
+root.title("Herramienta para la introducción de datos en la DB de las Matrix")
 
 # Introducción de los datos
 def save_new_monster(self, id, pais, nom_regulador, data_vigor, data_derogada, reglament, mtr_software, mtr_hard, mtr_rollover, mtr_longitud, play_autoplay, play_duració, play_free_games, mny_currency, mny_tokens, hw_defined, hw_interrupcions, rng_confidence_level, rng_criptogràficament_segur, rng_aprovat_previament, sign_sha1, sign_md5, sign_crc16, sign_crc32, sign_checksum, sign_hmac_sha1, sign_altres, min_bet, max_bet, math_min_rtp, math_max_rtp, math_inclos_jackpot, jp_standalone, jp_lap, jp_wap, jp_mystery, jp_max_win, jp_aportació, aw_idioma, aw_limitacions, aw_moneda, aw_etiquetes, cms_casino, cms_jurisdiccional, cms_protocol, cms_comptadors, specs_comentaris):
-    conn=psycopg2.connect(dbname="Matrix_DB", user="wiki", password="wiki", host="192.168.1.16", port="5432")
+    conn=psycopg2.connect(dbname='''DB''', user='''USR''', password='''PWD''', host='''IP''', port='''PORT''')
     cursor=conn.cursor()
     query='''INSERT INTO monster(id, pais, nom_regulador, data_vigor, data_derogada, reglament, mtr_software, mtr_hard, mtr_rollover, mtr_longitud, play_autoplay, play_duració, play_free_games, mny_currency, mny_tokens, hw_defined, hw_interrupcions, rng_confidence_level, rng_criptogràficament_segur, rng_aprovat_previament, sign_sha1, sign_md5, sign_crc16, sign_crc32, sign_checksum, sign_hmac_sha1, sign_altres, min_bet, max_bet, math_min_rtp, math_max_rtp, math_inclos_jackpot, jp_standalone, jp_lap, jp_wap, jp_mystery, jp_max_win, jp_aportació, aw_idioma, aw_limitacions, aw_moneda, aw_etiquetes, cms_casino, cms_jurisdiccional, cms_protocol, cms_comptadors, specs_comentaris) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
     cursor.execute(query, (id, pais, nom_regulador, data_vigor, data_derogada, reglament, mtr_software, mtr_hard, mtr_rollover, mtr_longitud, play_autoplay, play_duració, play_free_games, mny_currency, mny_tokens, hw_defined, hw_interrupcions, rng_confidence_level, rng_criptogràficament_segur, rng_aprovat_previament, sign_sha1, sign_md5, sign_crc16, sign_crc32, sign_checksum, sign_hmac_sha1, sign_altres, min_bet, max_bet, math_min_rtp, math_max_rtp, math_inclos_jackpot, jp_standalone, jp_lap, jp_wap, jp_mystery, jp_max_win, jp_aportació, aw_idioma, aw_limitacions, aw_moneda, aw_etiquetes, cms_casino, cms_jurisdiccional, cms_protocol, cms_comptadors, specs_comentaris))
@@ -69,8 +69,8 @@ def get_id_country(country, reglament): #Devuelve la ID buscando por país y reg
     if jur:
         return jur[0][0]
     else:
-        return False    
-    
+        return False
+
 def get_data(num): #Devuelve el país asociado a una ID (num)
     conn=psycopg2.connect(dbname="Matrix_DB", user="wiki", password="wiki", host="192.168.1.16", port="5432")
     cursor=conn.cursor()
@@ -93,7 +93,7 @@ def get_info(pais, reglament): #Devuelve toda la información buscando por país
         return info
     else:
         return False
-  
+
 def set_combo_box(entry, text): #Pone a un combo box el (text) que se le pase si es que tiene esa opcion
     index = entry.findText(text, QtCore.Qt.MatchExactly)
     if index >= 0:
@@ -170,7 +170,7 @@ class Ui_Dialog(object):
         self.buttonBox.addButton(self.buttonClear, QtWidgets.QDialogButtonBox.ActionRole)
         self.buttonBox.addButton(self.buttonSearch, QtWidgets.QDialogButtonBox.ActionRole)
         self.buttonBox.addButton(self.buttonHelp, QtWidgets.QDialogButtonBox.ActionRole)
-               
+
     #Regulación
         self.Insert = QtWidgets.QTabWidget(Dialog)
         self.Insert.setGeometry(QtCore.QRect(10, 30, 851, 281))
@@ -206,25 +206,7 @@ class Ui_Dialog(object):
         self.reglament.addItem("")
         self.reglament.addItem("")
         self.reglament.addItem("")
-        
-        ######################
-        #self.cal = QCalendarWidget(self.tab)
-        #self.cal.move(20,20)
-        #self.cal.setGridVisible(True)
-        #self.cal.setSelectedDate()
-        
-        
-        #self.data_vigor = QtWidgets.QLabel(self.tab)
-        #self.cal.clicked[QtCore.QDate].connect(self.data_vigor.setText(self.cal.selectedDate().toString()))
-        
-        #date = self.cal.selectedDate()
-        #self.data_vigor.setText(date.toString())
-        #self.data_vigor.move(20,200)
-        
-        #self.data_vigor.setGeometry(100,100,300,300)
-        #self.setObjectName("data_vigor")
-        #############################
-        
+
         self.data_vigor = QtWidgets.QDateEdit(self.tab)
         self.data_vigor.setDate(QtCore.QDate.currentDate())
         self.data_vigor.setGeometry(QtCore.QRect(170, 80, 111, 22))
@@ -233,15 +215,15 @@ class Ui_Dialog(object):
         self.data_derogada.setMaxLength(8)
         self.data_derogada.setGeometry(QtCore.QRect(170, 110, 113, 20))
         self.data_derogada.setObjectName("data_derogada")
-        
+
     #List View
         self.label_47 = QtWidgets.QLabel(Dialog)
         self.label_47.setGeometry(570, 70, 101, 16)
         self.label_47.setObjectName("label_47")
         self.lista = QtWidgets.QListWidget(Dialog)
         self.lista.setGeometry(570, 100, 256, 192)
-        
-    #Contadores   
+
+    #Contadores
         self.Insert.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
@@ -287,7 +269,7 @@ class Ui_Dialog(object):
         self.label_13 = QtWidgets.QLabel(self.tab_3)
         self.label_13.setGeometry(QtCore.QRect(10, 80, 61, 16))
         self.label_13.setObjectName("label_13")
-        
+
     #Partidas
         self.play_autoplay = QtWidgets.QLineEdit(self.tab_3)
         self.play_autoplay.setGeometry(QtCore.QRect(170, 20, 113, 20))
@@ -307,7 +289,7 @@ class Ui_Dialog(object):
         self.label_14 = QtWidgets.QLabel(self.tab_4)
         self.label_14.setGeometry(QtCore.QRect(10, 50, 121, 16))
         self.label_14.setObjectName("label_14")
-       
+
     #Créditos
         self.mny_currency = QtWidgets.QLineEdit(self.tab_4)
         self.mny_currency.setGeometry(QtCore.QRect(170, 20, 113, 20))
@@ -324,7 +306,7 @@ class Ui_Dialog(object):
         self.label_16 = QtWidgets.QLabel(self.tab_5)
         self.label_16.setGeometry(QtCore.QRect(10, 50, 131, 16))
         self.label_16.setObjectName("label_16")
-        
+
     #Hardware
         self.hw_interrupcions = QtWidgets.QLineEdit(self.tab_5)
         self.hw_interrupcions.setGeometry(QtCore.QRect(170, 50, 113, 20))
@@ -346,7 +328,7 @@ class Ui_Dialog(object):
         self.label_19 = QtWidgets.QLabel(self.tab_6)
         self.label_19.setGeometry(QtCore.QRect(10, 80, 141, 16))
         self.label_19.setObjectName("label_19")
-        
+
     #RNG
         self.rng_confidence_level = QtWidgets.QLineEdit(self.tab_6)
         self.rng_confidence_level.setMaxLength(6)
@@ -373,7 +355,7 @@ class Ui_Dialog(object):
         self.label_21 = QtWidgets.QLabel(self.tab_7)
         self.label_21.setGeometry(QtCore.QRect(10, 50, 47, 13))
         self.label_21.setObjectName("label_21")
-        
+
     #Apuestas
         self.max_bet = QtWidgets.QLineEdit(self.tab_7)
         self.max_bet.setMaxLength(10)
@@ -395,7 +377,7 @@ class Ui_Dialog(object):
         self.label_24 = QtWidgets.QLabel(self.tab_8)
         self.label_24.setGeometry(QtCore.QRect(10, 80, 91, 16))
         self.label_24.setObjectName("label_24")
-        
+
     #Mates
         self.math_min_rtp = QtWidgets.QLineEdit(self.tab_8)
         self.math_min_rtp.setGeometry(QtCore.QRect(170, 20, 113, 20))
@@ -430,7 +412,7 @@ class Ui_Dialog(object):
         self.label_31 = QtWidgets.QLabel(self.tab_9)
         self.label_31.setGeometry(QtCore.QRect(10, 200, 71, 16))
         self.label_31.setObjectName("label_31")
-        
+
     #Firmas
         self.sign_sha1 = QtWidgets.QComboBox(self.tab_9)
         self.sign_sha1.setGeometry(QtCore.QRect(170, 20, 90, 22))
@@ -495,7 +477,7 @@ class Ui_Dialog(object):
         self.label_37 = QtWidgets.QLabel(self.tab_10)
         self.label_37.setGeometry(QtCore.QRect(10, 170, 131, 16))
         self.label_37.setObjectName("label_37")
-        
+
     #Jackpots
         self.jp_standalone = QtWidgets.QComboBox(self.tab_10)
         self.jp_standalone.setGeometry(QtCore.QRect(170, 20, 90, 22))
@@ -544,7 +526,7 @@ class Ui_Dialog(object):
         self.label_41 = QtWidgets.QLabel(self.tab_11)
         self.label_41.setGeometry(QtCore.QRect(10, 110, 71, 16))
         self.label_41.setObjectName("label_41")
-        
+
     #Artwork
         self.aw_idioma = QtWidgets.QLineEdit(self.tab_11)
         self.aw_idioma.setGeometry(QtCore.QRect(170, 20, 113, 20))
@@ -573,7 +555,7 @@ class Ui_Dialog(object):
         self.label_45 = QtWidgets.QLabel(self.tab_12)
         self.label_45.setGeometry(QtCore.QRect(10, 110, 131, 16))
         self.label_45.setObjectName("label_45")
-        
+
     #CMS
         self.cms_casino = QtWidgets.QLineEdit(self.tab_12)
         self.cms_casino.setGeometry(QtCore.QRect(170, 20, 113, 20))
@@ -593,7 +575,7 @@ class Ui_Dialog(object):
         self.label_46 = QtWidgets.QLabel(self.tab_13)
         self.label_46.setGeometry(QtCore.QRect(10, 20, 241, 16))
         self.label_46.setObjectName("label_46")
-        
+
     #Específicos
         self.specs_comentaris = QtWidgets.QTextEdit(self.tab_13)
         self.specs_comentaris.setGeometry(QtCore.QRect(10, 40, 271, 211))
@@ -617,7 +599,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Herramienta para la introducción de datos en la DB de las Matrix  - For LandBased use only"))
-        
+
     #Regulación
         self.label.setText(_translate("Dialog", "Pais"))
         self.label_2.setText(_translate("Dialog", "Nombre del Regulador"))
@@ -631,7 +613,7 @@ class Ui_Dialog(object):
         self.reglament.setItemText(3, _translate("Dialog", "AWP (máquina B)"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab), _translate("Dialog", "Regulación"))
         self.label_47.setText(_translate("Dialod", "Available Data"))
-        
+
     #Contadores
         self.label_6.setText(_translate("Dialog", "Contadores por Software"))
         self.label_7.setText(_translate("Dialog", "Contadores por Hardware"))
@@ -644,25 +626,25 @@ class Ui_Dialog(object):
         self.mtr_hard.setItemText(1, _translate("Dialog", "No"))
         self.mtr_hard.setItemText(2, _translate("Dialog", "Sin Definir"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_2), _translate("Dialog", "Contadores"))
-        
+
     #Partidas
         self.label_10.setText(_translate("Dialog", "Autoplay"))
         self.label_11.setText(_translate("Dialog", "Duración de las partidas"))
         self.label_13.setText(_translate("Dialog", "Free Games"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_3), _translate("Dialog", "Partidas"))
-        
+
     #Créditos
         self.label_12.setText(_translate("Dialog", "Moneda de curso legal"))
         self.label_14.setText(_translate("Dialog", "Tokens (tickets inckuídos)"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_4), _translate("Dialog", "Créditos"))
-    
+
     #Hardware
         self.label_15.setText(_translate("Dialog", "Se menciona en el reglamento"))
         self.label_16.setText(_translate("Dialog", "Interrupciones requeridas"))
         self.hw_defined.setItemText(0, _translate("Dialog", "Si"))
         self.hw_defined.setItemText(1, _translate("Dialog", "No"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_5), _translate("Dialog", "Hardware"))
-        
+
     #RNG
         self.label_17.setText(_translate("Dialog", "Confidence Level"))
         self.label_18.setText(_translate("Dialog", "Criptográficamente seguro?"))
@@ -674,18 +656,18 @@ class Ui_Dialog(object):
         self.rng_aprovat_previament.setItemText(1, _translate("Dialog", "No"))
         self.rng_aprovat_previament.setItemText(2, _translate("Dialog", "Sin Definir"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_6), _translate("Dialog", "RNG"))
-        
+
     #Apuestas
         self.label_20.setText(_translate("Dialog", "Max Bet"))
         self.label_21.setText(_translate("Dialog", "Min Bet"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_7), _translate("Dialog", "Apuestas"))
-        
+
     #Mates
         self.label_22.setText(_translate("Dialog", "RTP Mínimo"))
         self.label_23.setText(_translate("Dialog", "RTP Máximo"))
         self.label_24.setText(_translate("Dialog", "Incluye Jackpots"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_8), _translate("Dialog", "Mates"))
-        
+
     #Firmas
         self.label_25.setText(_translate("Dialog", "HMAC-SHA1"))
         self.label_26.setText(_translate("Dialog", "SHA1"))
@@ -716,7 +698,7 @@ class Ui_Dialog(object):
         self.sign_altres.setItemText(1, _translate("Dialog", "No"))
         self.sign_altres.setItemText(2, _translate("Dialog", "Sin Definir"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_9), _translate("Dialog", "Firmas"))
-        
+
     #Jackpots
         self.label_32.setText(_translate("Dialog", "Jackpot Standalone"))
         self.label_33.setText(_translate("Dialog", "LAP"))
@@ -737,21 +719,21 @@ class Ui_Dialog(object):
         self.jp_mystery.setItemText(1, _translate("Dialog", "No"))
         self.jp_mystery.setItemText(2, _translate("Dialog", "Sin Def."))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_10), _translate("Dialog", "Jackpots"))
-        
+
     #Artwork
         self.label_38.setText(_translate("Dialog", "Idioma del Artwork"))
         self.label_39.setText(_translate("Dialog", "Limitaciones"))
         self.label_40.setText(_translate("Dialog", "Moneda en el HUD"))
         self.label_41.setText(_translate("Dialog", "Etiquetas"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_11), _translate("Dialog", "Artwork"))
-        
+
     #CMS
         self.label_42.setText(_translate("Dialog", "CMS Própio del casino?"))
         self.label_43.setText(_translate("Dialog", "CMS Jurisdiccional"))
         self.label_44.setText(_translate("Dialog", "Protocolos del CMS"))
         self.label_45.setText(_translate("Dialog", "Contadores a pasar al CMS"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_12), _translate("Dialog", "CMS"))
-        
+
     #Específicos
         self.label_46.setText(_translate("Dialog", "Comentarios y otros datos a tener en cuenta"))
         self.Insert.setTabText(self.Insert.indexOf(self.tab_13), _translate("Dialog", "Específicos"))
@@ -759,23 +741,23 @@ class Ui_Dialog(object):
 class MyApp(QtWidgets.QMainWindow, Ui_Dialog):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
-        Ui_Dialog.__init__(self)    
+        Ui_Dialog.__init__(self)
         self.setupUi(self)
         self.show_jurisdictions()
         self.buttonAccept.clicked.connect(self.wasowski)
         self.buttonSearch.clicked.connect(self.buscar_info)
         self.buttonClear.clicked.connect(self.full_clear)
         self.buttonHelp.clicked.connect(self.ayuda)
-        
+
     def wasowski(self): #Mira en BBDD si ya existe el país con ese reglamento, si es así lo actualiza sino crea una nueva entrada
-        if get_id_country(self.pais.text(), self.reglament.currentText()): 
+        if get_id_country(self.pais.text(), self.reglament.currentText()):
             reply = QMessageBox.question(self, "Alerta", "¿Estas seguro que quieres sobreescribir los datos en la base de datos?", QMessageBox.Yes, QMessageBox.No)
             if reply == QMessageBox.Yes:
                 update_monster(self, get_id_country(self.pais.text(), self.reglament.currentText()), self.pais.text(), self.nom_regulador.text(), self.data_vigor.text(), self.data_derogada.text(), self.reglament.currentText(), self.mtr_software.currentText(), self.mtr_hard.currentText(), self.mtr_rollover.text(), self.mtr_longitud.text(), self.play_autoplay.text(), self.play_duracio.text(), self.play_free_games.text(), self.mny_currency.text(), self.mny_tokens.text(), self.hw_defined.currentText(), self.hw_interrupcions.text(), self.rng_confidence_level.text(), self.rng_criptograficament_segur.currentText(), self.rng_aprovat_previament.currentText(), self.sign_sha1.currentText(), self.sign_md5.currentText(), self.sign_crc16.currentText(), self.sign_crc32.currentText(), self.sign_checksum.currentText(), self.sign_hmac_sha1.currentText(), self.sign_altres.currentText(), self.min_bet.text(), self.max_bet.text(), self.math_min_rtp.text(), self.math_max_rtp.text(), self.math_inclos_jackpot.text(), self.jp_standalone.currentText(), self.jp_lap.currentText(), self.jp_wap.currentText(), self.jp_mystery.currentText(), self.jp_max_win.text(), self.jp_aportacio.text(), self.aw_idioma.text(), self.aw_limitacions.text(), self.aw_moneda.text(), self.aw_etiquetes.text(), self.cms_casino.text(), self.cms_jurisdiccional.text(), self.cms_protocol.text(), self.cms_contadors.text(), self.specs_comentaris.toPlainText())
         else:
             save_new_monster(self, get_id()+1, self.pais.text(),self.nom_regulador.text(), self.data_vigor.text(), self.data_derogada.text(), self.reglament.currentText(), self.mtr_software.currentText(), self.mtr_hard.currentText(), self.mtr_rollover.text(), self.mtr_longitud.text(), self.play_autoplay.text(), self.play_duracio.text(), self.play_free_games.text(), self.mny_currency.text(), self.mny_tokens.text(), self.hw_defined.currentText(), self.hw_interrupcions.text(), self.rng_confidence_level.text(), self.rng_criptograficament_segur.currentText(), self.rng_aprovat_previament.currentText(), self.sign_sha1.currentText(), self.sign_md5.currentText(), self.sign_crc16.currentText(), self.sign_crc32.currentText(), self.sign_checksum.currentText(), self.sign_hmac_sha1.currentText(), self.sign_altres.currentText(), self.min_bet.text(), self.max_bet.text(), self.math_min_rtp.text(), self.math_max_rtp.text(), self.math_inclos_jackpot.text(), self.jp_standalone.currentText(), self.jp_lap.currentText(), self.jp_wap.currentText(), self.jp_mystery.currentText(), self.jp_max_win.text(), self.jp_aportacio.text(), self.aw_idioma.text(), self.aw_limitacions.text(), self.aw_moneda.text(), self.aw_etiquetes.text(), self.cms_casino.text(), self.cms_jurisdiccional.text(), self.cms_protocol.text(), self.cms_contadors.text(), self.specs_comentaris.toPlainText())
         self.show_jurisdictions()
-        
+
     def buscar_info(self): #Busca en la BBDD la jurisdiccion que se haya puesto en el campo País y el reglamento tambien. A continuacion introduce toda la información en sus respectivos campos
         if self.lista.currentItem() != None: #Si se ha seleccionado algo de la lista de jurisdicciones la carga, sino busca por lo introducido en país
             tmp_text = self.lista.currentItem().text().split("-")
@@ -835,52 +817,52 @@ class MyApp(QtWidgets.QMainWindow, Ui_Dialog):
             self.cms_contadors.setText(info[0][45])
             self.specs_comentaris.setText(info[0][46])
         else:
-            QMessageBox.about(self, "Error", "Jurisdicción no encontrada")          
-    
+            QMessageBox.about(self, "Error", "Jurisdicción no encontrada")
+
     def full_clear(self): #Pone todos los campos vacios (o en default)
         reply = QMessageBox.question(self, "Alerta", "¿Estas seguro que quieres limpiar todos los campos?", QMessageBox.Yes, QMessageBox.No)
         if reply == QMessageBox.Yes:
             clear(self)
-    
+
     def show_jurisdictions(self): #Añade a la lista las ultimas entradas actualizadas
         self.lista.clear()
         info = get_jurisdictions()
         for i in info:
             item = QtWidgets.QListWidgetItem(i[1] + " - " + i[5])
             self.lista.addItem(item)
-    
+
     def ayuda(self): #Muestra pantalla de ayuda
         QMessageBox.about(self, "Help", '''
 --------------------[[ Cómo introducir/actualizar datos ]]--------------------
 Rellenar todos los campos de los que se tengan datos y pulsar "Submit"
 
-Recomendación: Si lo que se quiere es actualizar información, es recomendable hacer 
+Recomendación: Si lo que se quiere es actualizar información, es recomendable hacer
 un "Load" primero para obtener los datos que tiene la base de datos.
 
 ---------------------------------[[ Clear ]]-----------------------------------
-Vacía todos los campos o los pone en default si son desplegables. También quita la 
+Vacía todos los campos o los pone en default si son desplegables. También quita la
 seleccion de la lista.
 
-    - Si la has liado mucho piensa: ¿Que haria Jesus? Y recuerda que matarlos a 
-        todos para empezar de zero es una opción.
+    - Si la has liado mucho piensa: ¿Que haria Jesus? Y recuerda que matarlos a
+        todos para empezar de zero, es una opción.
 
 ----------------------------[[ Cómo cargar datos ]]-----------------------------
-Para cargar una jurisdiccion se debe seleccionar en la lista de datos la jurisdiccion 
+Para cargar una jurisdiccion se debe seleccionar en la lista de datos la jurisdiccion
 deseada o escribir el Pais y seleccionar el Reglamento deseados, a continuacion pulsar "Load".
-        
-        
-        
-                                    Para más información contactar con: 
+
+
+
+                                    Para más información contactar con:
                                         - nicolas.riquelme@bmm.com
                                         - marti.salvador@bmm.com
-                                    
+
                                     Y para todo lo demás, MasterCard.
         ''')
-    
+
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     app =  QtWidgets.QApplication(sys.argv)
-    window = MyApp()  
+    window = MyApp()
     #timer = QTimer()
     #timer.timeout.connect(window.updateTime)
     #timer.start(10000)
