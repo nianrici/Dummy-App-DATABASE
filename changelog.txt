@@ -1,0 +1,11 @@
+v2.1.3 - 30/07/2020
+- Se ha añadido funcionalidad de updatear datos en la matrix
+- Se ha añadido funcionalidad de limpiar todos los campos
+- Se ha añadido funcionalidad de busqueda para actualizar información más facilmente
+- Se ha añadido botón de ayuda con instrucciones básicas
+
+v2.1.4 - 31/07/2020
+- Corregido un bug referente a la introducción de datos del jackpot
+- Corregido un bug donde los datos de apuesta mínima y máxima quedaban invertidos
+- Se ha añadido una lista que muestra las entradas de la base de datos
+- Se ha añadido la posibilidad de cargar los datos a la app desde la lista anteriormente mencionada
